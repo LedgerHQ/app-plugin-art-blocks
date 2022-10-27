@@ -78,8 +78,9 @@ void handle_query_contract_ui(void *parameters) {
             break;
         case ADDRESS_TO_SCREEN:
             set_address_to_ui(msg, context);
+            break;
         default:
-            PRINTF("Received an invalid screenIndex\n");
+            PRINTF("Received an invalid screenIndex %d\n", screen);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
