@@ -19,9 +19,9 @@ const NANOS_ETH_PATH = Resolve("elfs/ethereum_nanos.elf");
 const NANOSP_ETH_PATH = Resolve("elfs/ethereum_nanosp.elf");
 const NANOX_ETH_PATH = Resolve("elfs/ethereum_nanox.elf");
 
-const NANOS_PLUGIN_PATH = Resolve("elfs/art_blocks_nanos.elf");
-const NANOSP_PLUGIN_PATH = Resolve("elfs/art_blocks_nanosp.elf");
-const NANOX_PLUGIN_PATH = Resolve("elfs/art_blocks_nanox.elf");
+const NANOS_PLUGIN_PATH = Resolve("elfs/plugin_nanos.elf");
+const NANOSP_PLUGIN_PATH = Resolve("elfs/plugin_nanosp.elf");
+const NANOX_PLUGIN_PATH = Resolve("elfs/plugin_nanox.elf");
 
 const NANOS_PLUGIN = { ArtBlocks: NANOS_PLUGIN_PATH };
 const NANOSP_PLUGIN = { ArtBlocks: NANOSP_PLUGIN_PATH };
@@ -82,7 +82,7 @@ function txFromEtherscan(rawTx) {
   * Emulation of the device using zemu
   * @param {string} device name of the device to emulate (nanos, nanox)
   * @param {function} func
-  * @param {boolean} signed the plugin is already signed 
+  * @param {boolean} signed the plugin is already signed
   * @returns {Promise}
   */
 function zemu(device, func, testNetwork, signed = false) {
@@ -91,7 +91,7 @@ function zemu(device, func, testNetwork, signed = false) {
      let eth_path;
      let plugin;
      let sim_options = sim_options_generic;
- 
+
      if (device === "nanos") {
       eth_path = NANOS_ETH_PATH;
       plugin = NANOS_PLUGIN;
@@ -105,14 +105,14 @@ function zemu(device, func, testNetwork, signed = false) {
       plugin = NANOX_PLUGIN;
       sim_options.model = "nanox";
     }
- 
+
      const sim = new Zemu(eth_path, plugin);
- 
+
      try {
        await sim.start(sim_options);
        const transport = await sim.getTransport();
        const eth = new Eth(transport);
- 
+
        if (!signed) {
          config = generate_plugin_config(testNetwork);
          eth.setLoadConfig({
