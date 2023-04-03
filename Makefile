@@ -34,6 +34,11 @@ APPNAME = "ArtBlocks"
 #prepare hsm generation
 ifeq ($(TARGET_NAME), TARGET_NANOS)
 ICONNAME=icons/nanos_app_artblocks.gif
+else ifeq ($(TARGET_NAME), TARGET_STAX)
+ICONNAME=icons/stax_app_artblocks.gif
+DEFINES += ICONGLYPH=C_stax_artblocks_64px
+DEFINES += ICONBITMAP=C_stax_artblocks_64px_bitmap
+GLYPH_FILES += $(ICONNAME)
 else
 ICONNAME=icons/nanox_app_artblocks.gif
 endif
