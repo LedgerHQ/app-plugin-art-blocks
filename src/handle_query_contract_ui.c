@@ -1,7 +1,8 @@
+#include <stdbool.h>
 #include "art_blocks_plugin.h"
 
 // Set UI for "Amount" screen.
-static void set_amount_ui(ethQueryContractUI_t *msg, artblock_parameters_t *context) {
+static bool set_amount_ui(ethQueryContractUI_t *msg, artblock_parameters_t *context) {
     strlcpy(msg->title, "Amount", msg->titleLength);
 
     // set network ticker (ETH, BNB, etc) if needed
@@ -9,24 +10,24 @@ static void set_amount_ui(ethQueryContractUI_t *msg, artblock_parameters_t *cont
         strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
     }
 
-    amountToString(msg->pluginSharedRO->txContent->value.value,
-                   msg->pluginSharedRO->txContent->value.length,
-                   WEI_TO_ETHER,
-                   context->ticker_sent,
-                   msg->msg,
-                   msg->msgLength);
+    return amountToString(msg->pluginSharedRO->txContent->value.value,
+                          msg->pluginSharedRO->txContent->value.length,
+                          WEI_TO_ETHER,
+                          context->ticker_sent,
+                          msg->msg,
+                          msg->msgLength);
 }
 
-static void set_address_to_ui(ethQueryContractUI_t *msg, artblock_parameters_t *context) {
+static bool set_address_to_ui(ethQueryContractUI_t *msg, artblock_parameters_t *context) {
     strlcpy(msg->title, "To Address", msg->titleLength);
 
     msg->msg[0] = '0';
     msg->msg[1] = 'x';
 
-    getEthAddressStringFromBinary((uint8_t *) context->address_to,
-                                  msg->msg + 2,
-                                  msg->pluginSharedRW->sha3,
-                                  0);
+    return getEthAddressStringFromBinary((uint8_t *) context->address_to,
+                                         msg->msg + 2,
+                                         msg->pluginSharedRW->sha3,
+                                         0);
 }
 
 static uint8_t amount_screen(uint8_t index) {
@@ -62,26 +63,24 @@ static screens_t get_screen(const ethQueryContractUI_t *msg, const artblock_para
     }
 }
 
-void handle_query_contract_ui(void *parameters) {
-    ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
+void handle_query_contract_ui(ethQueryContractUI_t *msg) {
     artblock_parameters_t *context = (artblock_parameters_t *) msg->pluginContext;
+    bool ret = false;
 
     memset(msg->title, 0, msg->titleLength);
     memset(msg->msg, 0, msg->msgLength);
-    msg->result = ETH_PLUGIN_RESULT_OK;
 
     screens_t screen = get_screen(msg, context);
 
     switch (screen) {
         case AMOUNT_SCREEN:
-            set_amount_ui(msg, context);
+            ret = set_amount_ui(msg, context);
             break;
         case ADDRESS_TO_SCREEN:
-            set_address_to_ui(msg, context);
+            ret = set_address_to_ui(msg, context);
             break;
         default:
             PRINTF("Received an invalid screenIndex %d\n", screen);
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
     }
+    msg->result = ret ? ETH_PLUGIN_RESULT_OK : ETH_PLUGIN_RESULT_ERROR;
 }
