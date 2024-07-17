@@ -24,10 +24,7 @@ static bool set_address_to_ui(ethQueryContractUI_t *msg, artblock_parameters_t *
     msg->msg[0] = '0';
     msg->msg[1] = 'x';
 
-    return getEthAddressStringFromBinary((uint8_t *) context->address_to,
-                                         msg->msg + 2,
-                                         msg->pluginSharedRW->sha3,
-                                         0);
+    return getEthAddressStringFromBinary((uint8_t *) context->address_to, msg->msg + 2, 0);
 }
 
 static uint8_t amount_screen(uint8_t index) {
