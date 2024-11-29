@@ -2,8 +2,8 @@
     "chainId": 1,
     "contracts": [
         {
-            "address": "0x1dec9e52f1320f7deb29cbcd7b7d67f3df785142",
-            "contractName": "MinterSetPriceV0",
+            "address": "0xd94c7060808f3c876824e57e685702f3834d2e13",
+            "contractName": "MinterDAExpV1",
             "selectors": {
                 "0xefef39a1": {
                     "erc20OfInterest": [],
