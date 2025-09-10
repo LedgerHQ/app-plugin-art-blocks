@@ -15,15 +15,12 @@ const sim_options_generic = {
 
 const Resolve = require("path").resolve;
 
-const NANOS_ETH_PATH = Resolve("elfs/ethereum_nanos.elf");
 const NANOSP_ETH_PATH = Resolve("elfs/ethereum_nanosp.elf");
 const NANOX_ETH_PATH = Resolve("elfs/ethereum_nanox.elf");
 
-const NANOS_PLUGIN_PATH = Resolve("elfs/plugin_nanos.elf");
 const NANOSP_PLUGIN_PATH = Resolve("elfs/plugin_nanosp.elf");
 const NANOX_PLUGIN_PATH = Resolve("elfs/plugin_nanox.elf");
 
-const NANOS_PLUGIN = { ArtBlocks: NANOS_PLUGIN_PATH };
 const NANOSP_PLUGIN = { ArtBlocks: NANOSP_PLUGIN_PATH };
 const NANOX_PLUGIN = { ArtBlocks: NANOX_PLUGIN_PATH };
 
@@ -93,8 +90,6 @@ function zemu(device, func, testNetwork, signed = false) {
      let sim_options = sim_options_generic;
 
      if (device === "nanos") {
-      eth_path = NANOS_ETH_PATH;
-      plugin = NANOS_PLUGIN;
       sim_options.model = "nanos";
     } else if (device === "nanosp") {
       eth_path = NANOSP_ETH_PATH;
