@@ -10,8 +10,8 @@ static bool set_amount_ui(ethQueryContractUI_t *msg, artblock_parameters_t *cont
         strlcpy(context->ticker_sent, msg->network_ticker, sizeof(context->ticker_sent));
     }
 
-    return amountToString(msg->pluginSharedRO->txContent->value.value,
-                          msg->pluginSharedRO->txContent->value.length,
+    return amountToString(msg->txContent->value.value,
+                          msg->txContent->value.length,
                           WEI_TO_ETHER,
                           context->ticker_sent,
                           msg->msg,

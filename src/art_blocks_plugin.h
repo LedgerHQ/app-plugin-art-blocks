@@ -49,9 +49,9 @@ typedef struct artblocks_parameters_t {
     selector_t selectorIndex;
 } artblock_parameters_t;
 
-// Piece of code that will check that the above structure is not bigger than 5 * 32. Do not remove
-// this check.
-_Static_assert(sizeof(artblock_parameters_t) <= 5 * 32, "Structure of parameters too big.");
+// Check that the plugin context structure will fit in the ethereum allocated memory.
+// for us Do not remove!
+ASSERT_SIZEOF_PLUGIN_CONTEXT(artblock_parameters_t);
 
 static inline void printf_hex_array(const char *title __attribute__((unused)),
                                     size_t len __attribute__((unused)),
