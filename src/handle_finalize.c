@@ -1,7 +1,6 @@
 #include "art_blocks_plugin.h"
 
-void handle_finalize(void *parameters) {
-    ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
+void handle_finalize(ethPluginFinalize_t *msg) {
     msg->uiType = ETH_UI_TYPE_GENERIC;
     artblock_parameters_t *context = (artblock_parameters_t *) msg->pluginContext;
     switch (context->selectorIndex) {
