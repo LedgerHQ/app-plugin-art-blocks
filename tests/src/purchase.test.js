@@ -1,13 +1,13 @@
 import { processTest, populateTransaction } from "./test.fixture";
 
-const contractName = "MinterSetPriceERC20V0";
+const contractName = "MinterDAExpV1";
 
 const testLabel = "Purchase"; // <= Name of the test
 const testDirSuffix = "purchase"; // <= directory to compare device snapshots to
 const signedPlugin = false;
 const testNetwork= "ethereum";
 
-const contractAddr = "0x1dec9e52f1320f7deb29cbcd7b7d67f3df785142";
+const contractAddr = "0xd94c7060808f3c876824e57e685702f3834d2e13";
 const chainID = 1;
 
 const selector = "0xefef39a1";
